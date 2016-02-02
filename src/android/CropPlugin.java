@@ -55,6 +55,24 @@ public class CropPlugin extends CordovaPlugin {
                   .withAspect(800,600)
                   .start(cordova.getActivity());
           return true;
+      } else if (action.equals("cropImageFixedRatio")) {
+          String imagePath = args.getString(0);
+		  int height = Integer.parseInt(args.getString(1));
+		  int width = Integer.parseInt(args.getString(2));
+
+          this.inputUri = Uri.parse(imagePath);
+          this.outputUri = Uri.fromFile(new File(getTempDirectoryPath() + "/cropped.jpg"));
+
+          PluginResult pr = new PluginResult(PluginResult.Status.NO_RESULT);
+          pr.setKeepCallback(true);
+          callbackContext.sendPluginResult(pr);
+          this.callbackContext = callbackContext;
+
+          cordova.setActivityResultCallback(this);
+          Crop.of(this.inputUri, this.outputUri)
+                  .withAspect(height,width)
+                  .start(cordova.getActivity());
+          return true;
       }
 
       return false;
