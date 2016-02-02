@@ -70,7 +70,7 @@ public class CropPlugin extends CordovaPlugin {
 
           cordova.setActivityResultCallback(this);
           Crop.of(this.inputUri, this.outputUri)
-                  .withAspect(height,width)
+                  .withAspect(width,height)
                   .start(cordova.getActivity());
           return true;
       }
